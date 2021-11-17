@@ -1,0 +1,115 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://Coin.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Terreno.tres" type="TileSet" id=2]
+[ext_resource path="res://LifeCounterPlayer.gd" type="Script" id=3]
+[ext_resource path="res://Main.gd" type="Script" id=4]
+[ext_resource path="res://assets/images/elements/GameOver.png" type="Texture" id=5]
+[ext_resource path="res://Enemy.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Enemy.gd" type="Script" id=7]
+[ext_resource path="res://assets/images/elements/cactus.png" type="Texture" id=8]
+[ext_resource path="res://assets/backgrounds/static/city-1.jpg" type="Texture" id=10]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=12]
+[ext_resource path="res://GameOverAlert.gd" type="Script" id=13]
+[ext_resource path="res://RestartButton.gd" type="Script" id=14]
+[ext_resource path="res://Door.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Door.gd" type="Script" id=16]
+
+[node name="Main" type="Node"]
+script = ExtResource( 4 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+margin_top = -95.0
+margin_right = 1405.0
+margin_bottom = 600.0
+texture = ExtResource( 10 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Door" parent="." instance=ExtResource( 15 )]
+position = Vector2( 546, 528 )
+script = ExtResource( 16 )
+
+[node name="Coin1" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1306, 546 )
+
+[node name="Coin2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 349, 293 )
+
+[node name="Enemy1" parent="." instance=ExtResource( 6 )]
+position = Vector2( 1087, 472 )
+script = ExtResource( 7 )
+
+[node name="Player" parent="." instance=ExtResource( 12 )]
+position = Vector2( 23, 521 )
+collision_layer = 3
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+show_collision = true
+collision_layer = 2
+collision_mask = 2
+format = 1
+tile_data = PoolIntArray( 65535, 1, 0, 21, 1, 0, 131071, 1, 0, 65557, 1, 0, 196607, 1, 0, 131093, 1, 0, 262143, 1, 0, 196629, 1, 0, 327679, 1, 0, 262165, 1, 0, 393215, 1, 0, 327701, 1, 0, 458751, 1, 0, 393221, 1, 0, 393224, 1, 0, 393225, 1, 0, 393226, 1, 0, 393237, 1, 0, 524287, 1, 0, 458755, 1, 0, 458757, 1, 0, 458758, 1, 0, 458761, 1, 0, 458762, 1, 0, 458763, 1, 0, 458773, 1, 0, 589823, 1, 0, 524290, 1, 0, 524291, 1, 0, 524293, 1, 0, 524294, 1, 0, 524297, 1, 0, 524298, 1, 0, 524299, 1, 0, 524300, 1, 0, 524309, 1, 0, 655359, 1, 0, 589824, 0, 0, 589825, 0, 0, 589826, 0, 0, 589827, 0, 0, 589828, 0, 0, 589829, 0, 0, 589830, 0, 0, 589831, 0, 0, 589832, 0, 0, 589833, 0, 0, 589834, 0, 0, 589835, 0, 0, 589836, 0, 0, 589837, 0, 0, 589838, 0, 0, 589839, 0, 0, 589840, 0, 0, 589841, 0, 0, 589842, 0, 0, 589843, 0, 0, 589844, 0, 0, 589845, 1, 0 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="LifeCounterPlayer" type="Label" parent="CanvasLayer"]
+margin_left = 863.358
+margin_top = 0.0916824
+margin_right = 1020.36
+margin_bottom = 36.0917
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.2, 1 )
+motion_mirroring = Vector2( 1536, 0 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2( 672, 212 )
+scale = Vector2( 0.8, 0.8 )
+texture = ExtResource( 8 )
+
+[node name="GameOverAlert" type="Node2D" parent="."]
+visible = false
+position = Vector2( 863.358, 0.0916824 )
+script = ExtResource( 13 )
+
+[node name="TextureRect" type="TextureRect" parent="GameOverAlert"]
+margin_left = -636.317
+margin_right = -53.317
+margin_bottom = 359.0
+texture = ExtResource( 5 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RestartButton" type="Button" parent="GameOverAlert"]
+margin_left = -399.781
+margin_top = 254.0
+margin_right = -288.781
+margin_bottom = 274.0
+text = "Restart "
+script = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="body_entered" from="Door" to="Door" method="_on_Door_body_entered"]
+[connection signal="body_entered" from="Coin1" to="Coin1" method="_on_Coin_body_entered"]
+[connection signal="body_entered" from="Coin2" to="Coin2" method="_on_Coin_body_entered"]
+[connection signal="gameOver" from="Player" to="GameOverAlert" method="_on_Player_gameOver"]
+[connection signal="pressed" from="GameOverAlert/RestartButton" to="GameOverAlert/RestartButton" method="_on_RestartButton_pressed"]

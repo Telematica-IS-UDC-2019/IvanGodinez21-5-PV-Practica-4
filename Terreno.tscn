@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/images/tilesheets/tilesheet_small.png" type="Texture" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 32, 32 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 32, 32 )
+
+[node name="Suelo" type="Node2D"]
+
+[node name="tile00" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 128, 384, 64, 64 )
+
+[node name="Area2D" type="Area2D" parent="tile00"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="tile00/Area2D"]
+shape = SubResource( 1 )
+
+[node name="tile01" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 1024, 512, 64, 64 )
+
+[node name="Area2D" type="Area2D" parent="tile01"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="tile01/Area2D"]
+shape = SubResource( 2 )
